@@ -1,0 +1,435 @@
+Below is a **complete, standalone Functional Specification + Non-Functional Specification + UX flow + Data schema** for the **TechViswa – Model Comparison (Basic)** free tool.
+
+This is written as a real deliverable you can hand to developers or product teams.
+
+This feature is:
+
+### ✔️ Free
+
+### ✔️ Unlimited traffic
+
+### ✔️ Up to 3 models
+
+### ✔️ No testing / no batch / no login required
+
+### ✔️ SEO-friendly
+
+### ✔️ Fast loading
+
+### ✔️ Designed to convert users into paid testing users
+
+Let’s go deep.
+
+---
+
+# ⭐ **TECHVISWA – MODEL COMPARISON (BASIC)**
+
+## **Full Product Specification**
+
+---
+
+# 1. **Purpose**
+
+Provide visitors a **zero-friction, no-login** way to quickly:
+
+* browse AI models
+* select up to 3
+* view their specs side-by-side
+* compare pricing/capabilities
+* understand differences
+
+This drives:
+
+* SEO traffic
+* user trust
+* conversions into paid testing features
+
+---
+
+# 2. **High-Level Scope**
+
+### The free version allows:
+
+* Comparing **up to 3 models**
+* Viewing **basic specs**
+* Viewing **pricing**
+* Viewing **context window**
+* Viewing **modalities (text/vision/audio)**
+* Viewing **release date / version**
+* Viewing **provider / family**
+* Viewing **max output tokens**
+* Searching/filtering models
+
+### What’s NOT included:
+
+* No batch testing
+* No live testing
+* No benchmarks (just basic stats)
+* No cost calculator
+* No exports
+* No login required
+* No saved comparisons
+
+---
+
+# 3. **Functional Requirements**
+
+## 3.1 Model List Page
+
+### Functional Items:
+
+* Display all available LLMs (title + provider + short description)
+* Sort options:
+
+  * Alphabetical
+  * Price (low to high)
+  * Context window
+  * Release date
+* Filters:
+
+  * Provider (OpenAI, Anthropic, Google, Mistral…)
+  * Modality (text, vision, audio)
+  * Model family (GPT, Claude, Llama…)
+* Search by:
+
+  * model name
+  * provider
+
+### User Actions:
+
+* User sees model cards
+* User taps “Add to Compare”
+* Model moves into the comparison tray
+
+---
+
+## 3.2 Comparison Tray (Floating Sidebar / Bottom Bar)
+
+### Functional Items:
+
+* Tray shows selected models (max 3)
+* Each selection shows:
+
+  * Model name
+  * Provider
+  * Remove (×) button
+* CTA Button: **“Compare Models”**
+
+### Rules:
+
+* Disable "Compare" until 2 or more models selected
+* Disable further selection after 3 models
+
+---
+
+## 3.3 Comparison Page (Side-by-Side)
+
+### Comparison Table Columns:
+
+| Attribute | Model 1 | Model 2 | Model 3 |
+
+### Attributes included:
+
+#### Basic Specs
+
+* Name
+* Provider
+* Model family
+* Version
+* Release date
+* Status (Live / Preview / Deprecated)
+
+#### Pricing
+
+* Input price per 1M tokens
+* Output price per 1M tokens
+
+#### Context
+
+* Max input tokens
+* Max output tokens
+
+#### Modalities
+
+* Text
+* Vision
+* Audio In
+* Audio Out
+* Structured / JSON mode support
+
+#### Features
+
+* Function calling
+* Tools / agents
+* Streaming
+* Safety options
+
+#### Endpoints
+
+* Chat completions
+* Embeddings (true/false)
+* Vision (true/false)
+
+---
+
+## 3.4 Highlighting System
+
+* Best value in row highlighted **green**
+* Highest cost highlighted **red**
+* "Unknown" marked with gray
+* “Differences only” toggle:
+
+  * Removes rows where values are identical
+* Tooltip explanation for each attribute
+
+---
+
+## 3.5 Call to Action (Upsell)
+
+On comparison page footer:
+
+**Want to test these models? → Use TechViswa Test Bench (Free trial)**
+
+Click → takes to signup page for model testing.
+
+---
+
+# 4. **User Journeys**
+
+## Journey 1 — Search & Compare (90% of users)
+
+1. User Googles: *"GPT-4o vs Claude"*
+2. Lands on TechViswa Compare page
+3. Types “GPT-4o”, “Claude 3.5”, “Gemini Flash”
+4. Compares max 3
+5. Reads differences
+6. Clicks **Test these models → sign up**
+7. Conversion achieved
+
+---
+
+## Journey 2 — Explore models casually
+
+1. User lands on homepage
+2. Browses model list
+3. Adds 3 models
+4. Compares
+5. Leaves happy → remembers TechViswa
+6. Returns when testing is needed
+
+---
+
+## Journey 3 — From comparison to becoming a customer
+
+1. User compares
+2. Notices "Run prompt on these models" upsell
+3. Signs up for model testing plan
+4. Starts using product regularly → becomes paying user
+
+---
+
+# 5. **Non-Functional Requirements**
+
+## 5.1 Performance
+
+* Page loads in **< 1.5 seconds**
+* Model metadata cached for **24 hours**
+* Table renders in **< 200ms**
+* Fast client-side navigation (Next.js)
+
+## 5.2 Security
+
+* No sensitive data stored (public feature)
+* All model metadata stored in public cache (Redis or in-memory)
+
+## 5.3 Scalability
+
+* Expected to handle:
+
+  * **50k daily visitors**
+  * **1M monthly page views**
+* Vercel static pages ensure scalability
+* Comparison results computed client-side for speed
+
+## 5.4 SEO Requirements
+
+* Each model detail page must be SEO optimized
+* Rich schema markup for:
+
+  * AI Models
+  * Comparisons
+* Fast LCP
+* Crawlable public pages
+
+---
+
+# 6. **UI Specification**
+
+## 6.1 Model List Page
+
+* Grid layout (3–4 cards per row)
+* Sticky compare tray
+* Clear provider logos
+
+## 6.2 Comparison Page
+
+* Side-by-side responsive table
+* Mobile view → collapsible accordion
+* Desktop view → 3-column grid
+
+## 6.3 Empty State
+
+* When no models selected:
+
+  * “Select up to 3 models to compare”
+  * Show suggested comparisons:
+
+    * GPT-4o vs Claude
+    * Claude vs Gemini
+    * GPT-4o vs Llama
+
+---
+
+# 7. **Data Model (Simplified)**
+
+Table: **models**
+
+```
+id
+name
+provider
+family
+version
+status
+release_date
+context_window
+max_output_tokens
+input_price
+output_price
+modalities (json)
+features (json)
+created_at
+updated_at
+```
+
+API routes (public):
+
+```
+GET /api/models
+GET /api/models/:id
+GET /api/models/compare?ids=1,2,3
+```
+
+---
+
+# 8. **Technical Architecture**
+
+### Frontend
+
+* Next.js + React
+* Static generation (ISR) for model pages
+* Client-side table for comparison
+
+### Backend
+
+* Supabase for data
+* Redis/Upstash for caching
+* Cron job for updating models daily
+
+### Caching
+
+* 24-hour cached response for:
+
+  * model lists
+  * model details
+  * comparison tables
+
+### CDNs
+
+* All static assets behind Vercel CDN
+
+---
+
+# 9. **Analytics & Tracking**
+
+### Events to track:
+
+* Compare click
+* Add model to tray
+* Remove model
+* Compare page view
+* “Test models” CTA click → signup
+* Popular comparison sets
+* Time spent on comparison
+
+These feed your growth dashboard.
+
+---
+
+# 10. **Success Metrics**
+
+### ⭐ Leading Indicators:
+
+* Daily Active Users (DAU)
+* Compare actions per user
+* Time on page
+* Bounce rate improvement
+
+### ⭐ Lagging Indicators:
+
+* % of users clicking “Test Models”
+* % converting to signup
+* % of signups converting to paid
+
+### Target conversion:
+
+**2% of comparison users → paid Test Bench users**
+(This is realistic and proven in dev tooling.)
+
+---
+
+# 11. **Launch Scope (Minimal)**
+
+### Must have:
+
+* Model list
+* Compare up to 3
+* Basic specs
+* Pricing
+* Feature flags
+* Context window
+* Upsell CTA
+
+### Nice to have (optional):
+
+* Differences-only toggle
+* Highlight best/worst
+* Model search suggestions
+
+---
+
+# ⭐ FINAL VERDICT
+
+This spec gives you everything you need to build **TechViswa Model Comparison (Basic)** as a:
+
+* Powerful free tool
+* Traffic magnet
+* SEO engine
+* Conversion funnel
+* Low engineering cost
+* High ROI feature
+
+It’s the perfect **top-of-funnel growth product**.
+
+---
+
+If you want next, I can generate:
+
+🔥 **Wireframes (UX layout)**
+🔥 **Developer tasks (Jira-friendly)**
+🔥 **API details**
+🔥 **Full content copy for UI**
+
+Just say:
+**“Give me the wireframes”** or
+**“Give me developer tasks.”**
