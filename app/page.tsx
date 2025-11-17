@@ -72,12 +72,34 @@ export default function Home() {
         setSortField('releaseDate');
         setSortDirection('desc');
         break;
+      case 'vision':
+        setSelectedModality('vision');
+        setSortField('name');
+        break;
+      case 'reasoning':
+        setSearchTerm('');
+        setSortField('name');
+        break;
+      case 'largest-context':
+        setSortField('contextWindow');
+        setSortDirection('desc');
+        break;
+      case 'openai':
+        setSelectedProvider('OpenAI');
+        setSortField('name');
+        break;
+      case 'anthropic':
+        setSelectedProvider('Anthropic');
+        setSortField('name');
+        break;
     }
   };
 
   // Get preset filtered models
   const getPresetModels = (preset: string) => {
     const codingModels = ['gpt-4o', 'claude-3-5-sonnet-20241022', 'codestral-2508', 'o1', 'deepseek-v3'];
+    const reasoningModels = ['o1', 'o1-preview', 'o1-mini', 'deepseek-v3', 'claude-3-5-sonnet-20241022'];
+    
     switch (preset) {
       case 'coding':
         return enrichedModels.filter(m => codingModels.includes(m.id)).slice(0, 20);
@@ -92,6 +114,16 @@ export default function Home() {
             return dateB.getTime() - dateA.getTime();
           })
           .slice(0, 20);
+      case 'vision':
+        return enrichedModels.filter(m => m.modality === 'vision').slice(0, 20);
+      case 'reasoning':
+        return enrichedModels.filter(m => reasoningModels.includes(m.id)).slice(0, 20);
+      case 'largest-context':
+        return [...enrichedModels].sort((a, b) => b.contextWindow - a.contextWindow).slice(0, 20);
+      case 'openai':
+        return enrichedModels.filter(m => m.provider === 'OpenAI').slice(0, 20);
+      case 'anthropic':
+        return enrichedModels.filter(m => m.provider === 'Anthropic').slice(0, 20);
       default:
         return enrichedModels;
     }
@@ -437,6 +469,61 @@ export default function Home() {
             >
               <span className="text-lg">✨</span>
               Newest Models
+            </button>
+            <button
+              onClick={() => {
+                applyPreset('vision');
+                const models = getPresetModels('vision');
+                setSelectedForCompare(models.slice(0, 3).map(m => m.id));
+              }}
+              className="group px-5 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 text-sm font-semibold flex items-center gap-2"
+            >
+              <span className="text-lg">👁️</span>
+              Vision Models
+            </button>
+            <button
+              onClick={() => {
+                applyPreset('reasoning');
+                const models = getPresetModels('reasoning');
+                setSelectedForCompare(models.slice(0, 3).map(m => m.id));
+              }}
+              className="group px-5 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 text-sm font-semibold flex items-center gap-2"
+            >
+              <span className="text-lg">🧠</span>
+              Reasoning Models
+            </button>
+            <button
+              onClick={() => {
+                applyPreset('largest-context');
+                const models = getPresetModels('largest-context');
+                setSelectedForCompare(models.slice(0, 3).map(m => m.id));
+              }}
+              className="group px-5 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 text-sm font-semibold flex items-center gap-2"
+            >
+              <span className="text-lg">📚</span>
+              Largest Context
+            </button>
+            <button
+              onClick={() => {
+                applyPreset('openai');
+                const models = getPresetModels('openai');
+                setSelectedForCompare(models.slice(0, 3).map(m => m.id));
+              }}
+              className="group px-5 py-3 bg-gradient-to-r from-teal-500 to-green-600 text-white rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 text-sm font-semibold flex items-center gap-2"
+            >
+              <span className="text-lg">🤖</span>
+              OpenAI Only
+            </button>
+            <button
+              onClick={() => {
+                applyPreset('anthropic');
+                const models = getPresetModels('anthropic');
+                setSelectedForCompare(models.slice(0, 3).map(m => m.id));
+              }}
+              className="group px-5 py-3 bg-gradient-to-r from-rose-500 to-pink-600 text-white rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 text-sm font-semibold flex items-center gap-2"
+            >
+              <span className="text-lg">🎭</span>
+              Anthropic Only
             </button>
           </div>
         </div>
