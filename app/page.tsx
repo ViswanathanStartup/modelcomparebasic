@@ -96,12 +96,29 @@ export default function Home() {
 
   // Get preset filtered models
   const getPresetModels = (preset: string) => {
-    const codingModels = ['gpt-4o', 'claude-3-5-sonnet-20241022', 'codestral-2508', 'o1', 'deepseek-v3'];
-    const reasoningModels = ['o1', 'o1-preview', 'o1-mini', 'deepseek-v3', 'claude-3-5-sonnet-20241022'];
+    // Best coding models based on HumanEval scores and coding tags
+    const codingModels = [
+      'claude-sonnet-4-5-20250514', // 93.8 HumanEval, 77.2% SWE-bench
+      'o1', // 94.0 HumanEval, advanced reasoning
+      'claude-3-5-sonnet-20241022', // 92.0 HumanEval, coding tag
+      'codestral-2508', // 88.0 HumanEval, specialized for coding
+      'deepseek-v3', // 89.0 HumanEval, strong code generation
+      'gpt-4o', // Strong overall performance
+    ];
+    
+    // Advanced reasoning models with strong problem-solving capabilities
+    const reasoningModels = [
+      'o1', // Specialized reasoning model
+      'claude-opus-4-1-20250514', // Superior reasoning, 92.0 MMLU
+      'claude-sonnet-4-5-20250514', // Advanced reasoning, 91.5 MMLU
+      'deepseek-v3', // Strong reasoning capabilities
+      'claude-opus-4-20250514', // 86.8 MMLU
+      'claude-3-5-sonnet-20241022', // 88.7 MMLU
+    ];
     
     switch (preset) {
       case 'coding':
-        return enrichedModels.filter(m => codingModels.includes(m.id)).slice(0, 20);
+        return enrichedModels.filter(m => codingModels.includes(m.id));
       case 'cheapest':
         return [...enrichedModels].sort((a, b) => a.inputCostPer1M - b.inputCostPer1M).slice(0, 20);
       case 'newest':
@@ -114,9 +131,12 @@ export default function Home() {
           })
           .slice(0, 20);
       case 'vision':
-        return enrichedModels.filter(m => m.tags?.includes('Vision') || m.tags?.includes('Multimodal')).slice(0, 20);
+        // Models with Vision or Multimodal tags
+        return enrichedModels.filter(m => 
+          m.tags?.includes('Vision') || m.tags?.includes('Multimodal')
+        ).slice(0, 20);
       case 'reasoning':
-        return enrichedModels.filter(m => reasoningModels.includes(m.id)).slice(0, 20);
+        return enrichedModels.filter(m => reasoningModels.includes(m.id));
       case 'largest-context':
         return [...enrichedModels].sort((a, b) => b.contextWindow - a.contextWindow).slice(0, 20);
       case 'openai':
