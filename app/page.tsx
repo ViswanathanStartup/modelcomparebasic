@@ -73,7 +73,6 @@ export default function Home() {
         setSortDirection('desc');
         break;
       case 'vision':
-        setSelectedModality('vision');
         setSortField('name');
         break;
       case 'reasoning':
@@ -115,7 +114,7 @@ export default function Home() {
           })
           .slice(0, 20);
       case 'vision':
-        return enrichedModels.filter(m => m.modality === 'vision').slice(0, 20);
+        return enrichedModels.filter(m => m.tags?.includes('Vision') || m.tags?.includes('Multimodal')).slice(0, 20);
       case 'reasoning':
         return enrichedModels.filter(m => reasoningModels.includes(m.id)).slice(0, 20);
       case 'largest-context':
